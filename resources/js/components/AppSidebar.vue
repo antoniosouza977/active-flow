@@ -127,8 +127,8 @@ const data = {
           url: route('users.index'),
         },
         {
-          title: 'Team',
-          url: '#',
+          title: 'Perfis',
+          url: route('roles.index'),
         },
         {
           title: 'Billing',
