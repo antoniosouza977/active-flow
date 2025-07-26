@@ -2,7 +2,6 @@
 import {Head} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
 import type {BreadcrumbItem} from "@/types";
-import BaseForm from "@/components/crud/BaseForm.vue";
 import UserForm from "@/components/crud/users/UserForm.vue";
 
 const props = defineProps({
@@ -28,10 +27,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Editar Usuário"/>
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <BaseForm :index-route="route('users.index')">
-            <template #content>
-                <UserForm :user="props.user" />
-            </template>
-        </BaseForm>
+        <UserForm :user="props.user"/>
     </AppLayout>
 </template>

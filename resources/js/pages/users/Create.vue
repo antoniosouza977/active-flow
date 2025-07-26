@@ -2,7 +2,6 @@
 import {Head} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
 import type {BreadcrumbItem} from "@/types";
-import BaseForm from "@/components/crud/BaseForm.vue";
 import UserForm from "@/components/crud/users/UserForm.vue";
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -22,11 +21,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Criar Usuário"/>
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <BaseForm :index-route="route('users.index')">
-            <template #content>
-                <UserForm/>
-            </template>
-        </BaseForm>
+        <UserForm/>
     </AppLayout>
 </template>
 
