@@ -15,32 +15,24 @@ class SaveUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'       => 'nullable|exists:users,id',
-            'name'     => 'required|string|max:255',
-//            'email'    => 'required|string|email|max:255|unique:users,email,' . $this->id,
-            'email'    => [
+            'id' => 'nullable|exists:users,id',
+            'name' => 'required|string|max:255',
+            'email' => [
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($this->id)
+                Rule::unique('users', 'email')->ignore($this->id),
             ],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed', Rule::requiredIf(fn() => empty($this->id))],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed', Rule::requiredIf(fn () => empty($this->id))],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name'     => 'Nome',
-            'email'    => 'E-mail',
+            'name' => 'Nome',
+            'email' => 'E-mail',
             'password' => 'Senha',
         ];
     }
-
-//    public function messages()
-//    {
-//        return [
-//            'email.unique' => 'Email já cadastrado'
-//        ];
-//    }
 }
