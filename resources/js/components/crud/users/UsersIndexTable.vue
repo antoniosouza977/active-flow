@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Link} from "@inertiajs/vue3";
 import InactivateUserButton from "@/components/crud/users/InactivateUserButton.vue";
 import ActivateUserButton from "@/components/crud/users/ActivateUserButton.vue";
+import EditButton from "@/components/crud/EditButton.vue";
 
 defineProps({
     userList: {
@@ -34,14 +35,15 @@ defineProps({
                 <TableCell>{{ user.email }}</TableCell>
                 <TableCell>Orgs</TableCell>
                 <TableCell class="text-center space-x-2">
-                    <Link :href="route('users.edit', user.id)">
-                        <Button size="icon" title="Editar">
-                            <UserPen/>
-                        </Button>
-                    </Link>
 
-                    <InactivateUserButton v-if="user.is_active" :user="user" />
-                    <ActivateUserButton v-else :user="user" />
+                    <EditButton :route="route('users.edit', user.id)">
+                        <template #icon>
+                            <UserPen/>
+                        </template>
+                    </EditButton>
+
+                    <InactivateUserButton v-if="user.is_active" :user="user"/>
+                    <ActivateUserButton v-else :user="user"/>
                 </TableCell>
             </TableRow>
         </TableBody>
