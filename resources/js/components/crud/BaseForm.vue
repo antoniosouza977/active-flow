@@ -21,6 +21,10 @@ const props = defineProps({
     routePrefix: {
         type: String,
         required: true
+    },
+    berofeHandle: {
+        type: Function,
+        required: false
     }
 })
 
@@ -29,10 +33,16 @@ const processing = ref(false);
 
 const {handleSubmit, setErrors} = useForm({
     validationSchema: props.formSchema,
-    initialValues: props.initialValues
+    initialValues: props.initialValues,
+    keepValuesOnUnmount: true
 })
 
 const submitForm = handleSubmit((values) => {
+
+    if (props.berofeHandle) {
+        values = props.berofeHandle(values)
+    }
+
     const options = {
         onStart: () => processing.value = true,
         onError: (err) => setErrors(err),
@@ -59,7 +69,7 @@ const submitForm = handleSubmit((values) => {
                 </Link>
             </div>
             <div class="p-4">
-                <form @submit="submitForm" class="lg:w-2/3 w-full space-y-6">
+                <form @submit="submitForm" class="lg:w-2/3 w-full space-y-6" autocomplete="off">
                     <slot name="content" />
                     <Button type="submit">
                         <Loader2 v-if="processing" class="w-4 h-4 mr-2 animate-spin" />

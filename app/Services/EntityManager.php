@@ -54,7 +54,7 @@ class EntityManager
 
     public function update(array $data): bool
     {
-        return $this->getEntity()->newQuery()->update($data);
+        return $this->getEntity()->update($data);
     }
 
     public function destroy(): void

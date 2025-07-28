@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\AssignUserRoles;
 use App\Http\Requests\SaveUserRequest;
 use App\Models\User;
 use App\Services\EntityManager;
@@ -21,7 +22,7 @@ class UsersController extends Controller
 
     public function index(Request $request): Response
     {
-        $paginator = $this->entityManager->setModel(User::class)->getPage();
+        $paginator = $this->entityManager->setBuilder(User::query()->orderBy('name'))->getPage();
 
         return Inertia::render('users/Index', compact('paginator'));
     }
@@ -40,12 +41,18 @@ class UsersController extends Controller
 
     public function edit(User $user): Response
     {
+        $user->load('roles');
+
         return Inertia::render('users/Edit', compact('user'));
     }
 
-    public function update(SaveUserRequest $request, User $user): RedirectResponse
+    public function update(SaveUserRequest $request, User $user, AssignUserRoles $assignUserRoles): RedirectResponse
     {
-        $this->entityManager->setModel($user)->update($request->validated());
+        $this->entityManager->setModel($user)->update($request->except('roles'));
+
+        if ($request->has('roles')) {
+            $assignUserRoles->handle($user, $request->get('roles'));
+        }
 
         return to_route('users.index');
     }

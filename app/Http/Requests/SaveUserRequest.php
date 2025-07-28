@@ -23,7 +23,8 @@ class SaveUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($this->id),
             ],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed', Rule::requiredIf(fn () => empty($this->id))],
+            'password' => [Rule::requiredIf(fn() => empty($this->id)), 'string', 'min:8', 'confirmed',],
+            'roles' => 'nullable|array',
         ];
     }
 

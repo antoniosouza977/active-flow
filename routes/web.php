@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QueryRolesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // Roles
     Route::resource('/roles', RolesController::class)->except('show');
+    Route::get('/roles/query', QueryRolesController::class)->name('roles.query');
 });
 
 require __DIR__.'/settings.php';
